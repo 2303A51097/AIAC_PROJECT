@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CloudAI GreenOps Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">☁</div>
+            <div>
+                <h2>CloudAI</h2>
+                <p>GreenOps</p>
+            </div>
+        </div>
+
+        <nav class="side-nav">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#problem">Problem</a>
+            <a href="#progress">Progress</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#federated">Federated AI</a>
+            <a href="#actions">Actions</a>
+            <a href="#charts">Charts</a>
+            <a href="#report">Report</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Patent Prototype</p>
+            <span>v1.0</span>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div>
+                <h1>Carbon-Aware Cloud Optimization Dashboard</h1>
+                <p>Federated AI system for cloud storage lifecycle and resource orchestration</p>
+            </div>
+
+            <div class="topbar-actions">
+                <select id="regionSelect">
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Bengaluru">Bengaluru</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Chennai">Chennai</option>
+                </select>
+
+                <button class="primary-btn" onclick="runOptimization()">Run Optimization</button>
+                <button class="secondary-btn" onclick="resetDashboard()">Reset</button>
+            </div>
+        </header>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-left">
+                <p class="tag">Patent Problem Statement Prototype</p>
+
+                <h2>
+                    A Multi-Layer Federated and Carbon-Aware AI System
+                </h2>
+
+                <p>
+                    This interface demonstrates a closed-loop AI system that monitors cloud storage,
+                    trains local AI models, performs federated aggregation, applies carbon-aware
+                    decision-making, executes optimization actions, and learns from feedback.
+                </p>
+            </div>
+
+            <div class="hero-card">
+                <p>System Status</p>
+                <h2 id="systemStatus">Monitoring</h2>
+                <span>Monitor → Analyze → Decide → Execute → Feedback</span>
+            </div>
+        </section>
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="section">
+            <div class="section-title">
+                <p>Live Monitoring</p>
+                <h2>Cloud Optimization Metrics</h2>
+            </div>
+
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">🗄</div>
+                    <h3>Storage Usage</h3>
+                    <h2><span id="storageUsage">76</span>%</h2>
+                    <p>Current storage utilization</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🌱</div>
+                    <h3>Carbon Intensity</h3>
+                    <h2><span id="carbonIntensity">520</span> gCO₂/kWh</h2>
+                    <p>Current carbon impact</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Energy Usage</h3>
+                    <h2><span id="energyUsage">92</span> kWh</h2>
+                    <p>Energy consumed</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">₹</div>
+                    <h3>Monthly Cost</h3>
+                    <h2>₹<span id="monthlyCost">52000</span></h2>
+                    <p>Estimated monthly cost</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem Statement -->
+        <section id="problem" class="section">
+            <div class="section-title">
+                <p>Problem Statement</p>
+                <h2>What Problem Does This Invention Solve?</h2>
+            </div>
+
+            <div class="problem-box">
+                <p>
+                    Existing cloud storage systems mostly depend on static lifecycle policies,
+                    manual rules, or centralized optimization. They do not adapt properly to
+                    changing workloads, often ignore carbon intensity, and may require raw cloud
+                    data to be transferred to a central server. This creates cost, energy,
+                    privacy, and sustainability challenges.
+                </p>
+
+                <div class="problem-grid">
+                    <div>
+                        <h3>Privacy Risk</h3>
+                        <p>Centralized AI requires raw cloud data transfer.</p>
+                    </div>
+
+                    <div>
+                        <h3>Carbon Ignored</h3>
+                        <p>Carbon data is monitored but not used for automatic decisions.</p>
+                    </div>
+
+                    <div>
+                        <h3>Inefficient Resources</h3>
+                        <p>Storage, compute, network, backup, and replication are not optimized together.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress -->
+        <section id="progress" class="section">
+            <div class="section-title">
+                <p>Working Progress</p>
+                <h2>Closed-Loop Optimization Execution</h2>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progressFill"></div>
+                </div>
+
+                <h3 id="progressText">Waiting to start optimization...</h3>
+
+                <div class="progress-steps">
+                    <div class="progress-step" id="step1">1. Collect Cloud Data</div>
+                    <div class="progress-step" id="step2">2. Train Local AI</div>
+                    <div class="progress-step" id="step3">3. Federated Aggregation</div>
+                    <div class="progress-step" id="step4">4. Carbon Decision</div>
+                    <div class="progress-step" id="step5">5. Execute Action</div>
+                    <div class="progress-step" id="step6">6. Feedback Learning</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Logs -->
+        <section class="section">
+            <div class="section-title">
+                <p>System Logs</p>
+                <h2>Optimization Process Logs</h2>
+            </div>
+
+            <div class="log-box" id="logBox">
+                <p>[System] Waiting for optimization process...</p>
+            </div>
+        </section>
+
+        <!-- Architecture -->
+        <section id="architecture" class="section">
+            <div class="section-title">
+                <p>Architecture</p>
+                <h2>Multi-Layer System Architecture</h2>
+            </div>
+
+            <div class="layers">
+                <div>Layer 7: Dashboard and Reporting Layer</div>
+                <div>Layer 6: Feedback and Continuous Learning Layer</div>
+                <div>Layer 5: Optimization and Resource Orchestration Layer</div>
+                <div>Layer 4: Carbon-Aware Decision Layer</div>
+                <div>Layer 3: Federated Learning Layer</div>
+                <div>Layer 2: Local AI Intelligence Layer</div>
+                <div>Layer 1: Data Collection and Monitoring Layer</div>
+                <div>Base Layer: Cloud Storage Infrastructure</div>
+            </div>
+
+            <div class="architecture-flow">
+                <div>Cloud Nodes</div>
+                <span>→</span>
+                <div>Local AI Models</div>
+                <span>→</span>
+                <div>Federated Aggregator</div>
+                <span>→</span>
+                <div>Carbon-Aware Engine</div>
+                <span>→</span>
+                <div>Optimization Controller</div>
+            </div>
+        </section>
+
+        <!-- Federated AI -->
+        <section id="federated" class="section">
+            <div class="section-title">
+                <p>Federated Learning</p>
+                <h2>Privacy-Preserving Distributed AI</h2>
+            </div>
+
+            <div class="nodes">
+                <div class="node">
+                    <h3>Cloud Node A</h3>
+                    <p>Region: Mumbai</p>
+                    <p id="nodeAStatus">Status: Local model ready</p>
+                </div>
+
+                <div class="node">
+                    <h3>Cloud Node B</h3>
+                    <p>Region: Hyderabad</p>
+                    <p id="nodeBStatus">Status: Local model ready</p>
+                </div>
+
+                <div class="node">
+                    <h3>Cloud Node C</h3>
+                    <p>Region: Bengaluru</p>
+                    <p id="nodeCStatus">Status: Local model ready</p>
+                </div>
+            </div>
+
+            <div class="federated-box">
+                <h3>Federated Learning Aggregator</h3>
+                <p>
+                    Each cloud node trains a local AI model using local cloud data.
+                    Only model updates are shared with the aggregator. Raw data is never transferred.
+                </p>
+            </div>
+        </section>
+
+        <!-- Actions -->
+        <section id="actions" class="section">
+            <div class="section-title">
+                <p>AI Actions</p>
+                <h2>Optimization Actions</h2>
+            </div>
+
+            <div class="actions">
+                <button onclick="selectAction('Move rarely accessed data to cold or archive storage.')">
+                    Storage Tier Migration
+                </button>
+
+                <button onclick="selectAction('Schedule backup during low-carbon period.')">
+                    Carbon-Aware Backup
+                </button>
+
+                <button onclick="selectAction('Compress old and duplicate cloud data.')">
+                    Data Compression
+                </button>
+
+                <button onclick="selectAction('Scale compute and storage resources based on workload demand.')">
+                    Resource Scaling
+                </button>
+
+                <button onclick="selectAction('Reduce unnecessary replication copies.')">
+                    Replication Control
+                </button>
+            </div>
+
+            <div class="selected-action">
+                <h3>Selected Optimization Action</h3>
+                <p id="selectedAction">No optimization action selected yet.</p>
+            </div>
+        </section>
+
+        <!-- Charts -->
+        <section id="charts" class="section">
+            <div class="section-title">
+                <p>Analytics</p>
+                <h2>Before and After Optimization Charts</h2>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Cost Comparison</h3>
+                    <canvas id="costChart"></canvas>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Energy Comparison</h3>
+                    <canvas id="energyChart"></canvas>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Carbon Comparison</h3>
+                    <canvas id="carbonChart"></canvas>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Storage Usage</h3>
+                    <canvas id="storageChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Report -->
+        <section id="report" class="section">
+            <div class="section-title">
+                <p>Final Report</p>
+                <h2>Before and After Optimization Report</h2>
+            </div>
+
+            <div class="download-area">
+                <button class="primary-btn" onclick="downloadReport()">Download Report</button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Before Optimization</th>
+                            <th>After Optimization</th>
+                            <th>Improvement</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Storage Cost</td>
+                            <td id="costBefore">₹52,000</td>
+                            <td id="costAfter">Not optimized</td>
+                            <td>29% Saved</td>
+                        </tr>
+
+                        <tr>
+                            <td>Energy Usage</td>
+                            <td id="energyBefore">92 kWh</td>
+                            <td id="energyAfter">Not optimized</td>
+                            <td>47% Reduced</td>
+                        </tr>
+
+                        <tr>
+                            <td>Carbon Intensity</td>
+                            <td id="carbonBefore">520 gCO₂/kWh</td>
+                            <td id="carbonAfter">Not optimized</td>
+                            <td>40% Reduced</td>
+                        </tr>
+
+                        <tr>
+                            <td>Storage Usage</td>
+                            <td id="storageBefore">76%</td>
+                            <td id="storageAfter">Not optimized</td>
+                            <td>18% Optimized</td>
+                        </tr>
+
+                        <tr>
+                            <td>Storage Efficiency</td>
+                            <td id="efficiencyBefore">67%</td>
+                            <td id="efficiencyAfter">Not optimized</td>
+                            <td>22% Improved</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 CloudAI GreenOps | Python Flask Patent Prototype</p>
+        </footer>
+
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
